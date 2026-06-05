@@ -28,7 +28,7 @@ SteamFollowers.afterDOMLoaded = `
   }
 
   updateSteamCount()
-  document.addEventListener('nav', updateSteamCount)
+  document.addEventListener('nav', () => updateSteamCount())
 `
 
 SteamFollowers.css = `
