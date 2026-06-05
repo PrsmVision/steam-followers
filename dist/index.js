@@ -6,7 +6,8 @@ var SteamFollowers = (props) => {
     /* @__PURE__ */ jsx("span", { class: "steam-icon", children: "\u{1F3AE}" }),
     /* @__PURE__ */ jsx("span", { id: "steam-follower-count", children: "\u2014 seguidores" }),
     /* @__PURE__ */ jsx("script", { children: `
-        fetch('/PrismaVision/static/curator-stats.json')
+        const base = window.location.hostname === 'localhost' ? '' : '/PrismaVision'
+        fetch(base + '/static/curator-stats.json')
           .then(r => r.json())
           .then(d => {
             const el = document.getElementById('steam-follower-count')

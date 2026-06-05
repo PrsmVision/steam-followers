@@ -12,7 +12,8 @@ const SteamFollowers: QuartzComponent = (props?: QuartzComponentProps) => {
       <span class="steam-icon">🎮</span>
       <span id="steam-follower-count">— seguidores</span>
       <script>{`
-        fetch('/PrismaVision/static/curator-stats.json')
+        const base = window.location.hostname === 'localhost' ? '' : '/PrismaVision'
+        fetch(base + '/static/curator-stats.json')
           .then(r => r.json())
           .then(d => {
             const el = document.getElementById('steam-follower-count')
