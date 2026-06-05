@@ -11,19 +11,25 @@ const SteamFollowers: QuartzComponent = (props?: QuartzComponentProps) => {
     <div class="steam-followers">
       <span class="steam-icon">🎮</span>
       <span id="steam-follower-count">— seguidores</span>
-      <script>{`
-        const base = window.location.hostname === 'localhost' ? '' : '/PrismaVision'
-        fetch(base + '/static/curator-stats.json')
-          .then(r => r.json())
-          .then(d => {
-            const el = document.getElementById('steam-follower-count')
-            if (el) el.textContent = d.followers.toLocaleString('pt-BR') + ' seguidores'
-          })
-          .catch(() => {})
-      `}</script>
     </div>
   )
 }
+
+SteamFollowers.afterDOMLoaded = `
+  function updateSteamCount() {
+    const base = window.location.hostname === 'localhost' ? '' : '/PrismaVision'
+    fetch(base + '/static/curator-stats.json')
+      .then(r => r.json())
+      .then(d => {
+        const el = document.getElementById('steam-follower-count')
+        if (el) el.textContent = d.followers.toLocaleString('pt-BR') + ' seguidores'
+      })
+      .catch(() => {})
+  }
+
+  updateSteamCount()
+  document.addEventListener('nav', updateSteamCount)
+`
 
 SteamFollowers.css = `
   .steam-followers {
